@@ -23,6 +23,15 @@ Includes several fixes for the [BungieFrameWork Scripting Language] (BSL).
 [Anniversary Edition]: https://wiki.oni2.net/Anniversary_Edition
 
 
+### Building
+
+This project can be built normally with [Rust]. You must target i686 (i.e. x86) to interface with Oni.
+
+*In debug mode, Shinatama automatically creates a console and prints messages to it.*
+
+[Rust]: https://www.rust-lang.org/
+
+
 ## Patches
 
 #### `fix_bsl`
