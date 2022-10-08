@@ -1,7 +1,11 @@
 [package]
 name = "shinatama"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
+
+description = "Miscellaneous engine patches for Oni (2001)"
+repository = "https://github.com/lewdum/shinatama/"
+license = "MIT"
 
 [lib]
 name = "dinput"
