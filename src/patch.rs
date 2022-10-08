@@ -4,6 +4,8 @@ use windows::core::Result;
 
 use crate::{config::Config, patcher::Patcher};
 
+// Unsafe mainly because a bad Patcher instance could corrupt memory.
+// Running on the wrong executable could also corrupt memory.
 pub unsafe fn apply_all(config: &Config, oni: &mut Patcher, dao: &mut Patcher) -> Result<()> {
     if config.patches.fix_bsl {
         apply_fix_bsl(oni)?;

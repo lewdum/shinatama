@@ -13,13 +13,11 @@ use patcher::Patcher;
 
 #[no_mangle]
 #[allow(clippy::missing_safety_doc)]
-pub extern "system" fn DllMain(_instance: HINSTANCE, reason: u32, reserved: usize) -> bool {
+pub unsafe extern "system" fn DllMain(_instance: HINSTANCE, reason: u32, reserved: usize) -> bool {
     match reason {
         DLL_PROCESS_ATTACH => {
             if let Err(err) = process_attach() {
-                unsafe {
-                    debug::handle_error(&*err);
-                }
+                debug::handle_error(err.as_ref());
             }
         }
 
@@ -30,10 +28,9 @@ pub extern "system" fn DllMain(_instance: HINSTANCE, reason: u32, reserved: usiz
     true
 }
 
-fn process_attach() -> std::result::Result<(), Box<dyn std::error::Error>> {
-    unsafe {
-        debug::create_console()?;
-    }
+// Unsafe because running on the wrong executable could corrupt memory.
+unsafe fn process_attach() -> std::result::Result<(), Box<dyn std::error::Error>> {
+    debug::create_console()?;
 
     println!("Loading configuration...");
 
@@ -41,8 +38,8 @@ fn process_attach() -> std::result::Result<(), Box<dyn std::error::Error>> {
 
     println!("Getting module handles...");
 
-    let mut oni = unsafe { Patcher::from_main_module()? };
-    let mut dao = unsafe { Patcher::from_module(s!("binkw32.dll"))? };
+    let mut oni = Patcher::from_main_module()?;
+    let mut dao = Patcher::from_module(s!("binkw32.dll"))?;
 
     println!("Applying patches...");
 
@@ -61,14 +58,11 @@ fn process_detach(reserved: usize) {
         return;
     }
 
-    unsafe {
-        mem::drop(debug::destroy_console());
-    }
+    mem::drop(debug::destroy_console());
 }
 
 #[no_mangle]
-#[allow(clippy::missing_safety_doc)]
-pub unsafe extern "system" fn DirectInputCreateA(
+pub extern "system" fn DirectInputCreateA(
     _instance: HINSTANCE,
     _version: u32,
     _direct_input: *const c_void,

@@ -16,14 +16,14 @@ impl Patcher {
     }
 
     #[allow(clippy::cast_sign_loss)]
-    pub unsafe fn from_main_module() -> Result<Patcher> {
+    pub fn from_main_module() -> Result<Patcher> {
         // Traditional optimization: handle is a pointer to the base address.
-        GetModuleHandleA(None).map(|handle| Patcher::new(handle.0 as usize))
+        unsafe { GetModuleHandleA(None).map(|handle| Patcher::new(handle.0 as usize)) }
     }
 
     #[allow(clippy::cast_sign_loss)]
-    pub unsafe fn from_module(module: PCSTR) -> Result<Patcher> {
-        GetModuleHandleA(module).map(|handle| Patcher::new(handle.0 as usize))
+    pub fn from_module(module: PCSTR) -> Result<Patcher> {
+        unsafe { GetModuleHandleA(module).map(|handle| Patcher::new(handle.0 as usize)) }
     }
 
     // Semantically mutable.
@@ -39,6 +39,7 @@ impl Patcher {
     }
 
     // Semantically mutable.
+    // Cannot guarantee safety because of potential race conditions.
     #[inline]
     unsafe fn unprotected<F, T>(&mut self, offset: usize, size: usize, f: F) -> Result<T>
     where
@@ -52,6 +53,7 @@ impl Patcher {
     }
 }
 
+// Cannot guarantee safety because VirtualProtect can rarely lead to UB.
 unsafe fn disable_protection(pointer: *const c_void, size: usize) -> Result<PAGE_PROTECTION_FLAGS> {
     let mut old_protection = PAGE_PROTECTION_FLAGS::default();
     VirtualProtect(pointer, size, PAGE_EXECUTE_READWRITE, &mut old_protection)
@@ -59,6 +61,7 @@ unsafe fn disable_protection(pointer: *const c_void, size: usize) -> Result<PAGE
         .map(|_| old_protection)
 }
 
+// Cannot guarantee safety because VirtualProtect can rarely lead to UB.
 unsafe fn revert_protection(pointer: *const c_void, size: usize, mut old: PAGE_PROTECTION_FLAGS) {
     VirtualProtect(pointer, size, old, &mut old);
 }
