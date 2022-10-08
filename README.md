@@ -1,6 +1,6 @@
-<img src="https://wiki.oni2.net/w/images/0/05/TXMPSHINlistening.png" align="left" width="140" style="margin-right: 1em"/>
+<img src="https://wiki.oni2.net/w/images/0/05/TXMPSHINlistening.png" align="left" width="160" style="margin-right: 1em"/>
 
-## Shinatama
+# Shinatama
 
 A set of useful (*I hope*) patches for **Bungie**'s game [Oni] (2001).
 
@@ -27,7 +27,11 @@ Includes several fixes for the [BungieFrameWork Scripting Language] (BSL).
 
 #### `fix_bsl`
 
-Fix 3 bugs in BSL. They are documented [here].
+Fix 3 bugs in BSL.
+
+They are documented [here].
+
+*This patch is enabled by default.*
 
 [here]: https://lewdum.notion.site/Assorted-BSL-Fixes-13263d6ca8e84538829a07ad4d318085
 
@@ -61,7 +65,11 @@ Sets a debug flag left in the game by Bungie.
 
 #### `always_dev`
 
-Always enable Developer Access (cheat `x`).
+Always enable [Developer Access] (cheat `x`).
+
+*This patch is enabled by default.*
+
+[Developer Access]: https://wiki.oni2.net/Developer_Mode
 
 #### `fast_cutscenes`
 
@@ -75,9 +83,13 @@ Remove the black bars that appear during cutscenes.
 
 #### `shut_up`
 
-Remove debug messages from certain Daodan functions.
+Remove debug messages from certain [Daodan] functions.
 
 In particular, `d_waitforkey` and its variants.
+
+*This patch is enabled by default.*
+
+[Daodan]: https://wiki.oni2.net/Daodan_DLL
 
 
 ## History
