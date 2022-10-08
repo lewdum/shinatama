@@ -1,6 +1,6 @@
-<img src="https://wiki.oni2.net/w/images/0/05/TXMPSHINlistening.png" align="left" width="140" style="margin-right: 1em"/>
+<img src="https://wiki.oni2.net/w/images/0/05/TXMPSHINlistening.png" align="left" width="160" style="margin-right: 1em"/>
 
-## Shinatama
+# Shinatama
 
 A set of useful (*I hope*) patches for **Bungie**'s game [Oni] (2001).
 
