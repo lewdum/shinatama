@@ -1,4 +1,4 @@
-@cargo build --release
+@cargo build --target i686-pc-windows-msvc --release
 @if %errorlevel% neq 0 exit /b %errorlevel%
 
 @copy /b /y target\i686-pc-windows-msvc\release\dinput.dll ..\..\

@@ -1,4 +1,4 @@
-@cargo build
+@cargo build --target i686-pc-windows-msvc
 @if %errorlevel% neq 0 exit /b %errorlevel%
 
 @copy /b /y target\i686-pc-windows-msvc\debug\dinput.dll ..\..\

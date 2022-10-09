@@ -1,4 +1,4 @@
-@call scripts\build.bat
+@call scripts\debug.bat
 @if %errorlevel% neq 0 exit /b %errorlevel%
 
 @echo Starting game...
