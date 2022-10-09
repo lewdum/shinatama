@@ -11,7 +11,7 @@ Includes several fixes for the [BungieFrameWork Scripting Language] (BSL).
 [BungieFrameWork Scripting Language]: https://wiki.oni2.net/BSL:BFW_Scripting_Language
 
 
-## Getting Started
+## Getting started
 
 1. Download `dinput.dll` and `shina.ini` (or an equivalent archive) from the [latest release].
 1. Drop both files in your [Anniversary Edition] (AE) directory (**NOT** Oni's base directory).
@@ -22,21 +22,35 @@ Includes several fixes for the [BungieFrameWork Scripting Language] (BSL).
 
 [Anniversary Edition]: https://wiki.oni2.net/Anniversary_Edition
 
-
-### Building
-
-This project can be built normally with [Rust]. You must target i686 (i.e. x86) to interface with Oni.
-
-*In debug mode, Shinatama automatically creates a console and prints messages to it.*
-
-[Rust]: https://www.rust-lang.org/
+[default configuration]: /assets/shina.toml
 
 
-## Patches
+## Building from source
+
+This project can be built normally with [Cargo]. You must target i686 to interface with Oni:
+
+```
+cargo build --target i686-pc-windows-msvc
+```
+
+The [build] [scripts] take care of this, but you must run them from the root of the project, and the root itself must be at a folder two levels deeper than the AE, e.g. `Oni/AE/projects/shinatama`. In debug mode, Shinatama automatically creates a console when the game starts, and prints debug messages to it.
+
+[Cargo]: https://doc.rust-lang.org/stable/cargo/
+
+[build]: /scripts/debug.bat
+
+[scripts]: /scripts/release.bat
+
+
+## The patches
+
+All patches are summarized in the [default configuration] as well.
+
+[default configuration]: /assets/shina.toml
 
 #### `fix_bsl`
 
-Fix 3 bugs in BSL.
+**Fix 3 scoping-related bugs in BSL.**
 
 They are documented [here].
 
@@ -46,35 +60,35 @@ They are documented [here].
 
 #### `two_guns`
 
-Allow carrying two guns at the same time.
+**Allow carrying two guns at the same time.**
 
 To pick up a second gun, holster the first one.
 
 #### `keep_guns`
 
-Prevent guns from despawning when left on the floor.
+**Prevent guns from despawning when left on the floor.**
 
 Whether this leads to an overflow eventually is unknown at this time. :)
 
 #### `manual_reload`
 
-Prevent guns from reloading automatically when out of ammo.
+**Prevent guns from reloading automatically when out of ammo.**
 
-Trying to shoot will no longer reload a gun for you.
+Trying to shoot an empty gun will no longer reload it for you.
 
 #### `hypo_anytime`
 
-Allow using a Hypo Spray even at full health.
+**Allow using a Hypo Spray even at full health.**
 
 #### `unlock_doors`
 
-Unlock all doors, in all levels, at all times.
+**Unlock all doors, in all levels, at all times.**
 
 Sets a debug flag left in the game by Bungie.
 
 #### `always_dev`
 
-Always enable [Developer Access] (cheat `x`).
+**Always enable [Developer Access] (cheat `x`).**
 
 *This patch is enabled by default.*
 
@@ -82,17 +96,17 @@ Always enable [Developer Access] (cheat `x`).
 
 #### `fast_cutscenes`
 
-Speed up cutscenes by a lot.
+**Speed up cutscenes by a lot.**
 
 Results in overlapping dialogue, but this could be addressed in the future.
 
 #### `no_black_bars`
 
-Remove the black bars that appear during cutscenes.
+**Remove the black bars that appear during cutscenes.**
 
 #### `shut_up`
 
-Remove debug messages from certain [Daodan] functions.
+**Remove debug messages from certain [Daodan] functions.**
 
 In particular, `d_waitforkey` and its variants.
 
