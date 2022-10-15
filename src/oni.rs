@@ -2,7 +2,7 @@
 #[derive(Debug)]
 pub struct GunSet {
     pub held: *mut Gun,
-    pub unused: *mut Gun,
+    pub cinematic: *mut Gun,
     pub holstered: *mut Gun,
 }
 

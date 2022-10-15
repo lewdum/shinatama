@@ -127,13 +127,7 @@ unsafe extern "fastcall" fn hook_next_gun(
     out_index: &mut i16,
 ) -> *const Gun {
     if !guns.holstered.is_null() {
-        mem::swap(&mut guns.held, &mut guns.unused);
-        *out_index = 2;
-        return guns.holstered;
-    }
-    if !guns.unused.is_null() {
-        *out_index = 2;
-        return guns.holstered;
+        mem::swap(&mut guns.held, &mut guns.cinematic);
     }
     *out_index = 2;
     guns.holstered
