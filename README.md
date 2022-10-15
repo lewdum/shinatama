@@ -50,6 +50,7 @@ All patches are summarized in the [default configuration] as well.
 
 
 ### General
+---
 
 The following patches affect general mechanics of the game.
 
@@ -81,6 +82,7 @@ Trying to shoot an empty gun will no longer reload it for you.
 
 
 ### Development
+---
 
 The following patches are probably best left off during normal gameplay.
 
@@ -110,6 +112,7 @@ In particular, `d_waitforkey` and its variants.
 
 
 ### Experimental
+---
 
 The following patches are work in progress.
 
