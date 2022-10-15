@@ -48,15 +48,10 @@ All patches are summarized in the [default configuration] as well.
 
 [default configuration]: /assets/shina.toml
 
-#### `fix_bsl`
 
-**Fix 3 scoping-related bugs in BSL.**
+### General
 
-They are documented [here].
-
-*This patch is enabled by default.*
-
-[here]: https://lewdum.notion.site/Assorted-BSL-Fixes-13263d6ca8e84538829a07ad4d318085
+The following patches affect general mechanics of the game.
 
 #### `two_guns`
 
@@ -80,11 +75,14 @@ Trying to shoot an empty gun will no longer reload it for you.
 
 **Allow using a Hypo Spray even at full health.**
 
-#### `unlock_doors`
+#### `no_black_bars`
 
-**Unlock all doors, in all levels, at all times.**
+**Remove the cinematic black bars that appear during cutscenes.**
 
-Sets a debug flag left in the game by Bungie.
+
+### Development
+
+The following patches are probably best left off during normal gameplay.
 
 #### `always_dev`
 
@@ -94,15 +92,11 @@ Sets a debug flag left in the game by Bungie.
 
 [Developer Access]: https://wiki.oni2.net/Developer_Mode
 
-#### `fast_cutscenes`
+#### `unlock_doors`
 
-**Speed up cutscenes by a lot.**
+**Unlock all doors, in all levels, at all times.**
 
-Results in overlapping dialogue, but this could be addressed in the future.
-
-#### `no_black_bars`
-
-**Remove the black bars that appear during cutscenes.**
+Sets a debug flag left in the game by Bungie.
 
 #### `shut_up`
 
@@ -115,9 +109,25 @@ In particular, `d_waitforkey` and its variants.
 [Daodan]: https://wiki.oni2.net/Daodan_DLL
 
 
-## Experimental
+### Experimental
 
 The following patches are work in progress.
+
+#### `fix_bsl`
+
+**Fix 3 scoping-related bugs in BSL.**
+
+They are documented [here].
+
+*This patch is enabled by default.*
+
+[here]: https://lewdum.notion.site/Assorted-BSL-Fixes-13263d6ca8e84538829a07ad4d318085
+
+#### `fast_cutscenes`
+
+**Speed up cutscenes by a lot.**
+
+Results in overlapping dialogue, but this could be addressed in the future.
 
 #### `three_guns` (since 0.1.2)
 

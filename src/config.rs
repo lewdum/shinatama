@@ -11,28 +11,33 @@ const CFG_PATH: &str = "shina.ini";
 
 #[derive(Serialize, Deserialize)]
 pub struct Config {
-    pub patches: Patches,
-    pub experimental: Option<Experimental>,
+    pub general: General,
+    pub development: Development,
+    pub experimental: Experimental,
 }
 
 #[allow(clippy::struct_excessive_bools)]
 #[derive(Serialize, Deserialize)]
-pub struct Patches {
-    pub fix_bsl: bool,
+pub struct General {
     pub two_guns: bool,
     pub keep_guns: bool,
     pub manual_reload: bool,
     pub hypo_anytime: bool,
-    pub unlock_doors: bool,
-    pub always_dev: bool,
-    pub fast_cutscenes: bool,
     pub no_black_bars: bool,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct Development {
+    pub always_dev: bool,
+    pub unlock_doors: bool,
     pub shut_up: bool,
 }
 
 #[derive(Serialize, Deserialize)]
 pub struct Experimental {
-    pub three_guns: Option<bool>,
+    pub fix_bsl: bool,
+    pub fast_cutscenes: bool,
+    pub three_guns: bool,
 }
 
 impl Config {
@@ -48,10 +53,8 @@ impl Config {
     }
 
     pub fn validate(&mut self) -> Result<(), ValidateError> {
-        if let Some(e) = &self.experimental {
-            if e.three_guns == Some(true) && !self.patches.two_guns {
-                return Err(ValidateError::Requires("three_guns", "two_guns"));
-            }
+        if self.experimental.three_guns && !self.general.two_guns {
+            return Err(ValidateError::Requires("three_guns", "two_guns"));
         }
         Ok(())
     }

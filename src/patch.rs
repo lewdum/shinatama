@@ -14,43 +14,42 @@ use crate::{
 // Unsafe mainly because a bad Patcher instance could corrupt memory.
 // Running on the wrong executable could also corrupt memory.
 pub unsafe fn apply_all(config: &Config, oni: &mut Patcher, dao: &mut Patcher) -> Result<()> {
-    if config.patches.fix_bsl {
-        apply_fix_bsl(oni)?;
-    }
-    if config.patches.two_guns {
+    if config.general.two_guns {
         oni.patch_nop(0x0F7522, 2)?;
     }
-    if config.patches.keep_guns {
+    if config.general.keep_guns {
         oni.patch_nop(0x1195FA, 4)?;
     }
-    if config.patches.manual_reload {
+    if config.general.manual_reload {
         oni.patch_nop(0x0EDC77, 5)?;
         oni.patch_nop(0x0EDC80, 5)?;
     }
-    if config.patches.hypo_anytime {
+    if config.general.hypo_anytime {
         oni.patch_nop(0x11C7EF, 6)?;
     }
-    if config.patches.unlock_doors {
+    if config.general.no_black_bars {
+        oni.patch(0x0FCEF8, b"\xDC\xE8\x90")?;
+    }
+
+    if config.development.always_dev {
+        apply_always_dev(oni)?;
+    }
+    if config.development.unlock_doors {
         oni.patch(0x1EC5F5, b"\x01")?;
         oni.patch_nop(0x0C31EF, 6)?;
     }
-    if config.patches.always_dev {
-        apply_always_dev(oni)?;
-    }
-    if config.patches.fast_cutscenes {
-        apply_fast_cutscenes(oni)?;
-    }
-    if config.patches.no_black_bars {
-        oni.patch(0x0FCEF8, b"\xDC\xE8\x90")?;
-    }
-    if config.patches.shut_up {
+    if config.development.shut_up {
         dao.patch(0x006D7C, b"\xC3")?;
     }
 
-    if let Some(exp) = &config.experimental {
-        if exp.three_guns == Some(true) {
-            oni.patch_call(0x0DFC49, hook_next_gun as *const _)?;
-        }
+    if config.experimental.fix_bsl {
+        apply_fix_bsl(oni)?;
+    }
+    if config.experimental.fast_cutscenes {
+        apply_fast_cutscenes(oni)?;
+    }
+    if config.experimental.three_guns {
+        oni.patch_call(0x0DFC49, hook_next_gun as *const _)?;
     }
 
     Ok(())

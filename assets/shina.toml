@@ -1,10 +1,7 @@
 # To apply any changes you make here, please restart the game.
 
 
-[patches]
-
-# Fix several scope-related bugs in BSL.
-fix_bsl = true
+[general]
 
 # Allow carrying two guns at once.
 two_guns = false
@@ -18,23 +15,29 @@ manual_reload = false
 # Allow using a Hypo Spray even at full health.
 hypo_anytime = false
 
-# Unlock all doors in all levels.
-unlock_doors = false
+# Remove the black bars during cutscenes.
+no_black_bars = false
+
+
+[development]
 
 # Enable Developer Access automatically.
 always_dev = true
 
-# Speed up cutscenes considerably.
-fast_cutscenes = false
-
-# Remove the black bars during cutscenes.
-no_black_bars = false
+# Unlock all doors in all levels.
+unlock_doors = false
 
 # Suppress d_waitforkey debug messages.
 shut_up = true
 
 
 [experimental]
+
+# Fix several scope-related bugs in BSL.
+fix_bsl = true
+
+# Speed up cutscenes considerably.
+fast_cutscenes = false
 
 # Allow carrying even more guns!
 # Requires "two_guns".
