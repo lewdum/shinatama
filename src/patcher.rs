@@ -1,10 +1,7 @@
 use std::{ffi::c_void, ptr};
 
 #[allow(clippy::wildcard_imports)]
-use windows::{
-    core::*,
-    Win32::System::{LibraryLoader::*, Memory::*},
-};
+use windows::{core::*, Win32::System::Memory::*};
 
 pub struct Patcher {
     base: usize,
@@ -13,17 +10,6 @@ pub struct Patcher {
 impl Patcher {
     pub fn new(base: usize) -> Patcher {
         Patcher { base }
-    }
-
-    #[allow(clippy::cast_sign_loss)]
-    pub fn from_main_module() -> Result<Patcher> {
-        // Traditional optimization: handle is a pointer to the base address.
-        unsafe { GetModuleHandleA(None).map(|handle| Patcher::new(handle.0 as usize)) }
-    }
-
-    #[allow(clippy::cast_sign_loss)]
-    pub fn from_module(module: PCSTR) -> Result<Patcher> {
-        unsafe { GetModuleHandleA(module).map(|handle| Patcher::new(handle.0 as usize)) }
     }
 
     // Semantically mutable.

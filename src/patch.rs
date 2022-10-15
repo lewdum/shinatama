@@ -2,7 +2,8 @@
 
 use std::mem;
 
-use windows::core::Result;
+#[allow(clippy::wildcard_imports)]
+use windows::core::*;
 
 use crate::{
     config::Config,

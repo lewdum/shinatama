@@ -1,5 +1,6 @@
 mod config;
 mod debug;
+mod index;
 mod oni;
 mod patch;
 mod patcher;
@@ -10,6 +11,7 @@ use std::{ffi::c_void, mem};
 use windows::{core::*, Win32::Foundation::*, Win32::System::SystemServices::*};
 
 use config::Config;
+use index::Index;
 use patcher::Patcher;
 
 #[no_mangle]
@@ -41,8 +43,10 @@ unsafe fn process_attach() -> std::result::Result<(), Box<dyn std::error::Error>
 
     println!("Getting module handles...");
 
-    let mut oni = Patcher::from_main_module()?;
-    let mut dao = Patcher::from_module(s!("binkw32.dll"))?;
+    let index = Index::new()?;
+
+    let mut oni = Patcher::new(index.oni_base);
+    let mut dao = Patcher::new(index.dao_base);
 
     println!("Applying patches...");
 
