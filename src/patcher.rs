@@ -39,16 +39,34 @@ impl Patcher {
     }
 
     // Semantically mutable.
+    pub unsafe fn patch_jump(&mut self, offset: usize, target: *const ()) -> Result<()> {
+        let delta = (target as usize) - (self.base + offset) - 5;
+        self.unprotected(offset, 5, |p| {
+            ptr::write(p.cast(), 0xE9u8);
+            ptr::write(p.add(1).cast(), delta);
+        })
+    }
+
+    // Semantically mutable.
+    pub unsafe fn patch_call(&mut self, offset: usize, target: *const ()) -> Result<()> {
+        let delta = (target as usize) - (self.base + offset) - 5;
+        self.unprotected(offset, 5, |p| {
+            ptr::write(p.cast(), 0xE8u8);
+            ptr::write(p.add(1).cast(), delta);
+        })
+    }
+
+    // Semantically mutable.
     // Cannot guarantee safety because of potential race conditions.
     #[inline]
     unsafe fn unprotected<F, T>(&mut self, offset: usize, size: usize, f: F) -> Result<T>
     where
-        F: FnOnce(*mut c_void) -> T,
+        F: FnOnce(*mut u8) -> T,
     {
-        let pointer = (self.base + offset) as *mut c_void;
-        let old_protection = disable_protection(pointer, size)?;
+        let pointer = (self.base + offset) as *mut u8;
+        let old_protection = disable_protection(pointer.cast(), size)?;
         let result = f(pointer);
-        revert_protection(pointer, size, old_protection);
+        revert_protection(pointer.cast(), size, old_protection);
         Ok(result)
     }
 }

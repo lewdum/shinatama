@@ -113,3 +113,26 @@ In particular, `d_waitforkey` and its variants.
 *This patch is enabled by default.*
 
 [Daodan]: https://wiki.oni2.net/Daodan_DLL
+
+
+## Experimental
+
+The following patches are work in progress.
+
+#### `three_guns` (since 0.1.2)
+
+**Allow carrying yet another gun.**
+
+Oni has a special weapon slot called a "cinematic holster". It is used,
+for example, in the opening cutscene of the Syndicate Warehouse (Trial Run),
+where it stores the Campbell Equalizer that Konoko will unholster when the
+cutscene ends.
+
+This patch repurposes that slot, allowing Konoko to switch between all three of
+them freely. As a convenience, until she has at least two guns holstered, the
+third slot won't be cycled to. This patch also aims to keep compatibility with
+all cutscenes.
+
+Inspired by [this promotional image].
+
+[this promotional image]: https://wiki.oni2.net/Fully_Armed_Konoko

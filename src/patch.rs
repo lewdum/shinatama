@@ -1,8 +1,14 @@
 #![allow(clippy::unreadable_literal)]
 
+use std::mem;
+
 use windows::core::Result;
 
-use crate::{config::Config, patcher::Patcher};
+use crate::{
+    config::Config,
+    oni::{Gun, GunSet},
+    patcher::Patcher,
+};
 
 // Unsafe mainly because a bad Patcher instance could corrupt memory.
 // Running on the wrong executable could also corrupt memory.
@@ -39,6 +45,13 @@ pub unsafe fn apply_all(config: &Config, oni: &mut Patcher, dao: &mut Patcher) -
     if config.patches.shut_up {
         dao.patch(0x006D7C, b"\xC3")?;
     }
+
+    if let Some(exp) = &config.experimental {
+        if exp.three_guns == Some(true) {
+            oni.patch_call(0x0DFC49, hook_next_gun as *const _)?;
+        }
+    }
+
     Ok(())
 }
 
@@ -104,4 +117,24 @@ unsafe fn apply_fast_cutscenes(oni: &mut Patcher) -> Result<()> {
             \x01\xC1\x89\x8E\x48\x01\x00\x00\
             \xE9\xC5\x2F\xFD\xFF",
     )
+}
+
+/// Called when swapping to a different gun with one already in hand.
+/// This seems like the easiest way to do it without modifying other places.
+unsafe extern "fastcall" fn hook_next_gun(
+    guns: &mut GunSet,
+    _zero: u32,
+    out_index: &mut i16,
+) -> *const Gun {
+    if !guns.holstered.is_null() {
+        mem::swap(&mut guns.held, &mut guns.unused);
+        *out_index = 2;
+        return guns.holstered;
+    }
+    if !guns.unused.is_null() {
+        *out_index = 2;
+        return guns.holstered;
+    }
+    *out_index = 2;
+    guns.holstered
 }

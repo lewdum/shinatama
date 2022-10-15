@@ -1,3 +1,6 @@
+# To apply any changes you make here, please restart the game.
+
+
 [patches]
 
 # Fix several scope-related bugs in BSL.
@@ -29,3 +32,10 @@ no_black_bars = false
 
 # Suppress d_waitforkey debug messages.
 shut_up = true
+
+
+[experimental]
+
+# Allow carrying even more guns!
+# Requires "two_guns".
+three_guns = false

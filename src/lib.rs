@@ -1,5 +1,6 @@
 mod config;
 mod debug;
+mod oni;
 mod patch;
 mod patcher;
 
@@ -34,7 +35,9 @@ unsafe fn process_attach() -> std::result::Result<(), Box<dyn std::error::Error>
 
     println!("Loading configuration...");
 
-    let config = Config::load()?;
+    let mut config = Config::load()?;
+
+    config.validate()?;
 
     println!("Getting module handles...");
 
