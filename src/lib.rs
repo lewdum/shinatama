@@ -5,7 +5,7 @@ mod oni;
 mod patch;
 mod patcher;
 
-use std::{ffi::c_void, mem};
+use std::mem;
 
 #[allow(clippy::wildcard_imports)]
 use windows::{core::*, Win32::Foundation::*, Win32::System::SystemServices::*};
@@ -72,8 +72,8 @@ fn process_detach(reserved: usize) {
 pub extern "system" fn DirectInputCreateA(
     _instance: HINSTANCE,
     _version: u32,
-    _direct_input: *const c_void,
-    _punk_outer: *const c_void,
+    _direct_input: *const (),
+    _punk_outer: *const (),
 ) -> HRESULT {
     unreachable!()
 }
